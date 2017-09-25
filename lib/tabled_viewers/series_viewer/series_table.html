@@ -1,0 +1,33 @@
+<div class="table-container" [style.height.px]="(numRows*30)+26">
+<table>
+  <thead>
+    <tr>
+      <td>#</td>
+      <td>Label</td>
+      <td *ngIf="name != null">{{name}}</td>
+      <td *ngIf="name == null">Data</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of viewData; let i=index">
+      <td>{{startRow + i}}</td>
+      <td>{{row.key}}</td>
+      <td>{{row.value}}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="controls">
+  <div class="controls-range" [style.width.ex]="totalRowsDigits*2 + 3">
+    {{startRow}} - {{endRow}}
+  </div>
+  <div class="control" (click)="first()">|&lt;&lt;</div>
+  <div class="control" (click)="previous()">&lt;</div>
+  <input class="page-value" type="text" [value]="page"
+         [style.width.em]="maxPageDigits + 2"
+         (keyup)="setPageNumAsString($event.target.value)"
+         (blur)="setPageNumAsString($event.target.value)">
+  <div class="control" (click)="next()">&gt;</div>
+  <div class="control" (click)="last()">&gt;&gt;|</div>
+</div>
