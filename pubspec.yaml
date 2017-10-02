@@ -12,6 +12,7 @@ dependencies:
   angular_components: ^0.6.0
   grizzly_series:
     path: ../grizzly_series
+  markd:
 
 dev_dependencies:
   angular_test: ^1.0.0
@@ -22,9 +23,11 @@ dev_dependencies:
 transformers:
 - angular:
     entry_points:
+      - web/book/book.dart
       - web/iterable_viewer/iterable_viewer.dart
       - web/array_viewer/array_viewer.dart
       - web/series_viewer/series_viewer.dart
+      - web/markdown/markdown_viewer.dart
 - dart_to_js_script_rewriter
 
 # Uncomment the following in sdk 1.24+ to make pub serve

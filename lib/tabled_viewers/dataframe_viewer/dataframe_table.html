@@ -3,14 +3,16 @@
   <thead>
     <tr>
       <td>#</td>
-      <td *ngIf="dataName != null">{{dataName}}</td>
-      <td *ngIf="dataName == null">Data</td>
+      <td>Label</td>
+      <td *ngIf="name != null">{{name}}</td>
+      <td *ngIf="name == null">Data</td>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let row of viewData; let i=index">
       <td>{{startRow + i}}</td>
-      <td>{{row}}</td>
+      <td>{{row.key}}</td>
+      <td>{{row.value}}</td>
     </tr>
   </tbody>
 </table>

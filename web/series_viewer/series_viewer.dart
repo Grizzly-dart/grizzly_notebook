@@ -3,7 +3,7 @@
 
 import 'dart:math';
 import 'package:angular/angular.dart';
-import 'package:grizzly_notebook/tabled_viewers/series_viewer/series_table.dart';
+import 'package:grizzly_notebook/grizzly_notebook.dart';
 import 'package:grizzly_series/grizzly_series.dart';
 
 @Component(
@@ -17,16 +17,14 @@ import 'package:grizzly_series/grizzly_series.dart';
     ''',
   ],
   template: '''
-  <series-table [data]="data">
-  </series-table>
+  <series-table [cell]="data"></series-table>
   ''',
   directives: const [SeriesViewComponent],
-  providers: const [],
 )
 class AppComponent {
-  final DoubleSeries<String> data =
+  final SeriesCell<dynamic, double> data = new SeriesCell<dynamic, double>(
       new DoubleSeries<String>(new List.generate(1000, (i) => log(i)),
-          labels: new List.generate(1000, (i) => i.toString()));
+          labels: new List.generate(1000, (i) => i.toString())));
 }
 
 void main() {

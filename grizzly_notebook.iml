@@ -7,7 +7,9 @@
       <excludeFolder url="file://$MODULE_DIR$/build" />
       <excludeFolder url="file://$MODULE_DIR$/packages" />
       <excludeFolder url="file://$MODULE_DIR$/web/array_viewer/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/web/book/packages" />
       <excludeFolder url="file://$MODULE_DIR$/web/iterable_viewer/packages" />
+      <excludeFolder url="file://$MODULE_DIR$/web/markdown/packages" />
       <excludeFolder url="file://$MODULE_DIR$/web/packages" />
       <excludeFolder url="file://$MODULE_DIR$/web/series_viewer/packages" />
     </content>
