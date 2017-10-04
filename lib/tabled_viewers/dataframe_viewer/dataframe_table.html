@@ -4,15 +4,14 @@
     <tr>
       <td>#</td>
       <td>Label</td>
-      <td *ngIf="name != null">{{name}}</td>
-      <td *ngIf="name == null">Data</td>
+      <td *ngFor="let col of names">{{col}}</td>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let row of viewData; let i=index">
       <td>{{startRow + i}}</td>
       <td>{{row.key}}</td>
-      <td>{{row.value}}</td>
+      <td *ngFor="let col of row.value.data">{{col}}</td>
     </tr>
   </tbody>
 </table>

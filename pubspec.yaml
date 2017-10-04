@@ -28,6 +28,7 @@ transformers:
       - web/array_viewer/array_viewer.dart
       - web/series_viewer/series_viewer.dart
       - web/markdown/markdown_viewer.dart
+      - web/dataframe_viewer/dataframe_viewer.dart
 - dart_to_js_script_rewriter
 
 # Uncomment the following in sdk 1.24+ to make pub serve

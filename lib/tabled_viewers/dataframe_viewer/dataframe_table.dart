@@ -17,20 +17,19 @@ import 'package:grizzly_notebook/grizzly_notebook.dart';
   providers: const [],
 )
 class DataFrameViewComponent {
-  SeriesCell _cell;
+  DataFrameCell _cell;
 
   @Input()
-  set cell(SeriesCell v) {
+  set cell(DataFrameCell v) {
     _cell = v;
-    _dataLen = _data == null ? 0 : _data.length;
     update();
   }
 
+  Iterable get names => _data != null ? _data.columns : [];
+
   int get numRows => _cell.numRows;
 
-  dynamic get name => _data?.name;
-
-  Series get _data => _cell.data;
+  DataFrame get _data => _cell.data;
 
   int _page = 1;
 
@@ -50,7 +49,7 @@ class DataFrameViewComponent {
     page = int.parse(v, onError: (_) => 1);
   }
 
-  int _dataLen = 0;
+  int get _dataLen => _data.length;
 
   int get maxPages => (_dataLen / numRows).ceil();
 
@@ -58,12 +57,14 @@ class DataFrameViewComponent {
 
   int get endRow => (page == maxPages ? _dataLen : page * numRows) - 1;
 
-  int get maxPageDigits => (math.log(maxPages) / math.LN10).ceil();
+  int get maxPageDigits =>
+      maxPages != 0 ? (math.log(maxPages) / math.LN10).ceil() : 1;
 
-  int get totalRowsDigits => (math.log(_dataLen) / math.LN10).ceil();
+  int get totalRowsDigits =>
+      _dataLen != 0 ? (math.log(_dataLen) / math.LN10).ceil() : 1;
 
   void update() {
-    if (_data == null) {
+    if (_data == null || _dataLen == 0) {
       _viewData.clear();
       return;
     }
@@ -79,7 +80,7 @@ class DataFrameViewComponent {
     _viewData = _data.enumerateSliced(startRow, startRow + len - 1).toList();
   }
 
-  List<Pair> _viewData;
+  List<Pair> _viewData = <Pair>[];
 
   List<Pair> get viewData => _viewData;
 

@@ -27,3 +27,16 @@ class SeriesCell<IT, VT> {
 
   SeriesCell(this.data, {this.numRows: 10});
 }
+
+/// Encloses the information needed to display [Series]
+class DataFrameCell<IT, CT> {
+  /// Number of rows that should be displayed in a page
+  ///
+  /// Defaults to 10
+  int numRows = 10;
+
+  /// Data to display
+  DataFrame<IT, CT> data;
+
+  DataFrameCell(this.data, {this.numRows: 10});
+}
