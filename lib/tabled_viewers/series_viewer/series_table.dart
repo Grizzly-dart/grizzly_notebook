@@ -1,8 +1,9 @@
-library grizzly.notebook.tabled_viewers.iterable_viewer;
+library grizzly.notebook.tabled_viewers.series_viewer;
 
 import 'dart:math' as math;
 import 'package:grizzly_series/grizzly_series.dart';
 import 'package:angular/angular.dart';
+import 'package:grizzly_notebook/grizzly_notebook.dart';
 
 @Component(
   selector: 'series-table',
@@ -14,21 +15,20 @@ import 'package:angular/angular.dart';
   providers: const [],
 )
 class SeriesViewComponent {
-  /// Number of rows per page
+  SeriesCell _cell;
+
   @Input()
-  int numRows = 10;
-
-  dynamic get name => _data?.name;
-
-  Series _data;
-
-  /// Data to display
-  @Input()
-  set data(Series v) {
-    _data = v;
+  set cell(SeriesCell v) {
+    _cell = v;
     _dataLen = _data == null ? 0 : _data.length;
     update();
   }
+
+  int get numRows => _cell.numRows;
+
+  dynamic get name => _data?.name;
+
+  Series get _data => _cell.data;
 
   int _page = 1;
 
@@ -56,9 +56,9 @@ class SeriesViewComponent {
 
   int get endRow => (page == maxPages ? _dataLen : page * numRows) - 1;
 
-  int get maxPageDigits => (math.log(maxPages)/math.LN10).ceil();
+  int get maxPageDigits => (math.log(maxPages) / math.LN10).ceil();
 
-  int get totalRowsDigits => (math.log(_dataLen)/math.LN10).ceil();
+  int get totalRowsDigits => (math.log(_dataLen) / math.LN10).ceil();
 
   void update() {
     if (_data == null) {

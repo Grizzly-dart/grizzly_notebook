@@ -1,0 +1,7 @@
+<div class="container">
+  <div *ngFor="let cell of cells">
+    <series-table *ngIf="getType(cell) == 1" [cell]="cell"></series-table>
+    <iterable-table *ngIf="getType(cell) == 2" [cell]="cell"></iterable-table>
+    <markdown-viewer *ngIf="getType(cell) == 3" [content]="cell"></markdown-viewer>
+  </div>
+</div>

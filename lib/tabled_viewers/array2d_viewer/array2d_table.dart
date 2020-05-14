@@ -1,32 +1,36 @@
-library grizzly.notebook.tabled_viewers.iterable_viewer;
+library grizzly.notebook.tabled_viewers.array2d_viewer;
 
 import 'dart:math' as math;
+import 'package:grizzly_series/grizzly_series.dart';
 import 'package:angular/angular.dart';
 import 'package:grizzly_notebook/grizzly_notebook.dart';
 
+// TODO add horizontal scroll bars
+
 @Component(
-  selector: 'iterable-table',
-  styleUrls: const ['iterable_table.css'],
-  templateUrl: 'iterable_table.html',
+  selector: 'array2d-table',
+  styleUrls: const ['array2d_table.css'],
+  templateUrl: 'array2d_table.html',
   directives: const [
     CORE_DIRECTIVES,
   ],
+  providers: const [],
 )
-class IterableViewComponent {
-  IterableCell _cell;
+class Array2DComponent {
+  SeriesCell _cell;
 
   @Input()
-  set cell(IterableCell v) {
+  set cell(SeriesCell v) {
     _cell = v;
     _dataLen = _data == null ? 0 : _data.length;
     update();
   }
 
-  /// Number of rows per page
   int get numRows => _cell.numRows;
 
-  /// Data to display
-  Iterable<dynamic> get _data => _cell.data;
+  dynamic get name => _data?.name;
+
+  Series get _data => _cell.data;
 
   int _page = 1;
 
@@ -42,9 +46,6 @@ class IterableViewComponent {
     update();
   }
 
-  @Input()
-  String dataName;
-
   void setPageNumAsString(String v) {
     page = int.parse(v, onError: (_) => 1);
   }
@@ -57,11 +58,9 @@ class IterableViewComponent {
 
   int get endRow => (page == maxPages ? _dataLen : page * numRows) - 1;
 
-  int get maxPageDigits =>
-      _dataLen <= 0 ? 1 : (math.log(maxPages) / math.LN10).ceil();
+  int get maxPageDigits => (math.log(maxPages) / math.LN10).ceil();
 
-  int get totalRowsDigits =>
-      _dataLen <= 0 ? 1 : (math.log(_dataLen) / math.LN10).ceil();
+  int get totalRowsDigits => (math.log(_dataLen) / math.LN10).ceil();
 
   void update() {
     if (_data == null) {
@@ -76,20 +75,13 @@ class IterableViewComponent {
       _page = 1;
     }
 
-    final Iterator<dynamic> iterator = _data.skip(startRow).iterator;
-    iterator.moveNext();
     final int len = page == maxPages ? _dataLen - startRow : numRows;
-    _viewData = new List(len);
-
-    for (int i = 0; i < len; i++) {
-      _viewData[i] = iterator.current;
-      iterator.moveNext();
-    }
+    _viewData = _data.enumerateSliced(startRow, startRow + len - 1).toList();
   }
 
-  List<dynamic> _viewData;
+  List<Pair> _viewData;
 
-  List<dynamic> get viewData => _viewData;
+  List<Pair> get viewData => _viewData;
 
   void first() {
     page = 1;
